@@ -5,6 +5,7 @@
   * Packages you may not have:
     1. numpy
     2. scipy
+    3. matplotlib
     3. lxml
     4. PIL or Pillow
 ## Installation 
