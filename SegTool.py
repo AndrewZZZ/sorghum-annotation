@@ -2,6 +2,7 @@ import numpy as np
 import scipy as sp
 from PIL import Image
 import queue as Queue
+from collections import deque
 import matplotlib.path as path
 from scipy import misc
 
@@ -20,11 +21,13 @@ class SegTool:
             pointmap = np.zeros(im.shape)
         pointmap.astype(int)
         if queue is None:
-            queue = Queue.Queue();
-            queue.put([click_x,click_y]);
-        counter = 0
-        while (not queue.empty()):
-            center = queue.get();
+            queue = deque()
+            #queue = Queue.Queue();
+            queue.append([click_x,click_y])
+            #queue.put([click_x,click_y]);
+        while (queue):
+            center = queue.pop()
+            #center = queue.get();
             neighbour = SegTool.getneighbourpixel(pointmap,center[0],center[1],mode);
             modepoint=True;
             if mode=='add' or mode=='new':
@@ -40,8 +43,9 @@ class SegTool:
                         diff = abs(im.item((click_x,click_y))-im.item((neighbour[i][0],neighbour[i][1])));
                     #if diff<threshold and ((modepoint and pointmap.item((neighbour[i][0],neighbour[i][1]))==0) or (not modepoint and pointmap.item((neighbour[i][0],neighbour[i][1]))==ID)):
                     if diff < threshold :
-                        queue.put(neighbour[i]);
-                        counter += 1
+                        queue.append(neighbour[i])
+                        #queue.put(neighbour[i]);
+
                         x = neighbour[i][0]
                         y = neighbour[i][1]
                         newpointmap[x][y]=1;
@@ -114,17 +118,20 @@ class SegTool:
     def find_Line(im,x1,y1,x2,y2,threshold):
         points = SegTool.get_line(x1,y1,x2,y2)
         slope = abs(im[x1][y1] - im[x2][y2])/np.sqrt(np.sum((np.asarray([x1,y1]) - np.asarray([x2,y2]))**2))
-        result = Queue.Queue();
-        while(not points.empty()):
+        result = deque()
+        #result = Queue.Queue();
+        while(points):
             a = points.get();
             if a==[x1,y1]:
                 continue;
             if abs(abs(im[x1][y1] - im[a[0]][a[1]])/np.sqrt(np.sum((np.asarray([x1,y1]) - np.asarray(a))**2))-slope)<threshold:
-                result.put(a);
+                result.append(a)
+                #result.put(a);
         return result
 
     def get_line(x1, y1, x2, y2):
-        points = Queue.Queue();
+        points = deque()
+        #points = Queue.Queue();
         issteep = abs(y2-y1) > abs(x2-x1)
         if issteep:
             x1, y1 = y1, x1
@@ -145,9 +152,11 @@ class SegTool:
             ystep = -1
         for x in range(x1, x2 + 1):
             if issteep:
-                points.put([y, x])
+                points.append([y,x])
+                #points.put([y, x])
             else:
-                points.put([x, y])
+                points.append([x,y])
+                #points.put([x, y])
             error -= deltay
             if error < 0:
                 y += ystep
