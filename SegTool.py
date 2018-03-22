@@ -1,10 +1,6 @@
 import numpy as np
-import scipy as sp
-from PIL import Image
-import queue as Queue
 from collections import deque
 import matplotlib.path as path
-from scipy import misc
 
 class SegTool:
              
@@ -51,7 +47,6 @@ class SegTool:
                         newpointmap[x][y]=1;
                         checkmap[neighbour[i][0],neighbour[i][1]] = 7;    
                     checkmap[neighbour[i][0], neighbour[i][1]] = checkmap[neighbour[i][0], neighbour[i][1]] + 1;
-        print(counter)
         return newpointmap
 
     def lasso(im, pointList):

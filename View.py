@@ -58,8 +58,8 @@ class View ( wx.Frame ):
 
 
         self.stemAdd = self.verToolBar.AddRadioTool(10, "stemAdd",
-                                                    stemAdd_bmp,
-                                                    wx.NullBitmap, wx.EmptyString, "New stem", None)
+                                                    stemAdd_bmp, wx.NullBitmap,
+                                                    "New stem", wx.EmptyString,  None)
 
         #self.stemAdd = self.verToolBar.AddRadioTool(10, "stemAdd",
         #                                            wx.ArtProvider.GetBitmap(wx.ART_PLUS, wx.ART_TOOLBAR),
@@ -68,14 +68,28 @@ class View ( wx.Frame ):
         #self.stemMWAdd = self.verToolBar.AddRadioTool(20 , "stemMWAdd", wx.ArtProvider.GetBitmap( wx.ART_ADD_BOOKMARK, wx.ART_TOOLBAR ), wx.NullBitmap, wx.EmptyString, wx.EmptyString, None )
         #self.stemMWMinus = self.verToolBar.AddRadioTool(30 , "stemMWMinus", wx.ArtProvider.GetBitmap( wx.ART_DEL_BOOKMARK, wx.ART_TOOLBAR ), wx.NullBitmap, wx.EmptyString, wx.EmptyString, None )
         #self.verToolBar.AddSeparator()
-        self.leafAdd = self.verToolBar.AddRadioTool(40 , "leafAdd", leafNew_bmp, wx.NullBitmap, wx.EmptyString, wx.EmptyString, None )
-        self.leafMWAdd = self.verToolBar.AddRadioTool(50 , "leafMWAdd", leafAdd_bmp, wx.NullBitmap, wx.EmptyString, wx.EmptyString, None )
-        self.leafMWMinus = self.verToolBar.AddRadioTool(60 , "leafMWMinus", leafMinus_bmp, wx.NullBitmap, wx.EmptyString, wx.EmptyString, None )
-        self.leafLassoMinus = self.verToolBar.AddRadioTool(61 , "leafLassoMinus", leafLassoMinus_bmp, wx.NullBitmap, wx.EmptyString, wx.EmptyString, None )
+        self.leafAdd = self.verToolBar.AddRadioTool(40 , "leafAdd",
+                                                    leafNew_bmp, wx.NullBitmap,
+                                                    "New Leaf", wx.EmptyString, None )
+        self.leafMWAdd = self.verToolBar.AddRadioTool(50 , "leafMWAdd",
+                                                      leafAdd_bmp, wx.NullBitmap,
+                                                      "Leaf Area Add", wx.EmptyString, None )
+        self.leafMWMinus = self.verToolBar.AddRadioTool(60 , "leafMWMinus",
+                                                        leafMinus_bmp, wx.NullBitmap,
+                                                        "Leaf Area Minus", wx.EmptyString, None )
+        self.leafLassoMinus = self.verToolBar.AddRadioTool(61 , "leafLassoMinus",
+                                                           leafLassoMinus_bmp, wx.NullBitmap,
+                                                           "Leaf Area Minus Lasso", wx.EmptyString, None )
         #self.verToolBar.AddSeparator()
-        self.zoomIn = self.verToolBar.AddRadioTool(70 , "zoomIn", zoomIn_bmp, wx.NullBitmap, wx.EmptyString, wx.EmptyString, None )
-        self.zoomOut = self.verToolBar.AddRadioTool(80 , "zoomOut", zoomOut_bmp, wx.NullBitmap, wx.EmptyString, wx.EmptyString, None )
-        self.zoomOri = self.verToolBar.AddRadioTool(90 , "zoomOut", zoomBack_bmp, wx.NullBitmap, wx.EmptyString, wx.EmptyString, None )
+        self.zoomIn = self.verToolBar.AddRadioTool(70 , "zoomIn",
+                                                   zoomIn_bmp, wx.NullBitmap,
+                                                   "Zoom In", wx.EmptyString, None )
+        self.zoomOut = self.verToolBar.AddRadioTool(80 , "zoomOut",
+                                                    zoomOut_bmp, wx.NullBitmap,
+                                                    "Zoom Out", wx.EmptyString, None )
+        self.zoomOri = self.verToolBar.AddRadioTool(90 , "zoomBack",
+                                                    zoomBack_bmp, wx.NullBitmap,
+                                                    "Zoom to Origin", wx.EmptyString, None )
         #self.verToolBar.InsertSeparator(3)
         #self.verToolBar.InsertSeparator(6)
         self.verToolBar.Realize()
@@ -146,7 +160,8 @@ class View ( wx.Frame ):
         self.fileNameList = fileNameList
         self.fileListBox.Set(self.fileNameList)
     def OnCanvasLeftDown(self, evt):
-        self.SetStatusText(str(evt.GetPosition()))
+        #self.SetStatusText(str(evt.GetPosition()))
+        pass
     def OnTestTool(self, evt):
         print(str(evt.GetId()))
 
