@@ -8,6 +8,17 @@
     3. matplotlib
     3. lxml
     4. PIL or Pillow
+    
+To install all the dependencies:
+```sh
+pip install wxpython numpy scipy matplotlib lxml Pillow
+```
+For ubuntu 16.04 with GTK3 the best way to install wxPython is:
+```sh
+pip install -U \
+-f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-16.04 \
+wxPython
+```
 ## Installation 
 ```sh
 git clone https://github.com/Andrewzhzy/sorghum-annotator.git
