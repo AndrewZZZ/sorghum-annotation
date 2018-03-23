@@ -88,6 +88,7 @@ class Controller():
         if self.curTool == self.TOOL_STEM_NEW:
             self.logger.debug('opStack length: %d', len(self.opStack))
             if len(self.opStack) >= 3:
+                self.view.SetStatusText('New Stem Added')
                 self.opStack.append(pos)
                 self.logger.debug('Points for new stem: (%d,%d),(%d,%d),(%d,%d),(%d,%d)',
                            self.opStack[0][0], self.opStack[0][1],
@@ -120,6 +121,7 @@ class Controller():
                 #self.refreshTree()
 
             else:
+                self.view.SetStatusText("Please click point #%s " % (len(self.opStack) + 2))
                 self.opStack.append(pos)
         elif self.curTool ==self.TOOL_STEM_ADD:
             pass
@@ -287,6 +289,8 @@ class Controller():
         self.curTool = evt.GetId()
         self.logger.debug('Tool changed. Tool Code: %d', self.curTool)
         self.opStack.clear()
+        if self.curTool == self.TOOL_STEM_NEW:
+            self.view.SetStatusText("Please click point #1 ")
 
     def OnThresholdSliderChange(self, evt):
         self.curThreshold = int(self.view.thresholdSlider.GetValue()/5)
@@ -303,8 +307,12 @@ class Controller():
         self.logger.debug('File changed to: %d', self.curImageIdx)
         self.curImageName = self.dataModel.imageNameList[self.curImageIdx]
         self.curImage = self.dataModel.getImageByIdx(self.curImageIdx)
-        self.curSegmap = Segmap(self.dataModel.getSegmapByIdx(self.curImageIdx))
+        self.curSegmap = Segmap(self.dataModel.getSegmapByIdx(self.curImageIdx),  self.dataModel.loadDependcy(self.curImageName))
         self.refreshTree()
+        if self.view.sorghumTreeCtrl.ItemHasChildren(self.view.sorghumTreeCtrl.GetRootItem()):
+            self.view.sorghumTreeCtrl.SelectItem(self.view.sorghumTreeCtrl.GetFirstChild(self.view.sorghumTreeCtrl.GetRootItem())[0])
+        else:
+            self.view.sorghumTreeCtrl.SelectItem(self.view.sorghumTreeCtrl.GetRootItem())
         self.refreshCanvas()
 
     def OnTreeRightDown(self, evt):

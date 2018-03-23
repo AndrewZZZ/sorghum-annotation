@@ -54,16 +54,32 @@ class CanvasPanel(wx.ScrolledCanvas):
         image = self.mainImage.AdjustChannels(1.0, 1.0, 1.0, 1.0)
         bitmap = wx.Bitmap(image)
         dc.DrawBitmap(bitmap, 0, 0, True)
-        image = self.mask.AdjustChannels(20.0, 255.0, 255.0, 0.2)
+        regionMask = wx.Mask(wx.Bitmap(self.mask),wx.Colour(0,0,0))
+        image = self.mask.AdjustChannels(20.0, 255.0, 255.0, .5)
+        maskBitmap = wx.Bitmap(image)
+        #dc.DrawBitmap(maskBitmap, 0, 0, True)
+
+        self.GetScaleX()
+        scaledWidth = round(image.GetWidth()*self.GetScaleX())
+        scaledHeight = round(image.GetHeight()*self.GetScaleY())
+        image.Rescale(scaledWidth, scaledHeight)
+        clipRegion = wx.Region(wx.Bitmap(image), wx.Colour(0, 0, 0))
+        if clipRegion.IsEmpty():
+            return
+        clipRegion.Offset(dc.LogicalToDeviceX(0), dc.LogicalToDeviceY(0))
+        dc.SetDeviceClippingRegion(clipRegion)
+        #dc.SetClippingRegion(,0, maskBitmap.GetHeight(), maskBitmap.GetWidth())
+
+        dc.DrawBitmap(maskBitmap,0,0, True)
+
+
+        image = self.focusMask.AdjustChannels(1.0, 1.0, 1.0, 0.5)
         bitmap = wx.Bitmap(image)
         dc.DrawBitmap(bitmap, 0, 0, True)
+        dc.DestroyClippingRegion()
 
-
-        image = self.focusMask.AdjustChannels(1.0, 1.0, 1.0, 0.3)
-        bitmap = wx.Bitmap(image)
-        dc.DrawBitmap(bitmap, 0, 0, True)
-
-
+        #test
+        #dc.DrawBitmap(maskBitmap.GetMask().GetBitmap(), 0,0,True)
         #dc.DrawBitmap(wx.Bitmap(self.mainImage),-1,-1,True)
         #dc.DrawBitmap(wx.Bitmap(self.mask), 25, 25, True)
     def OnLeftDown(self, evt):

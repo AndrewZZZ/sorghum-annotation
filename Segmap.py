@@ -30,6 +30,7 @@ class Segmap():
         self.solveDependcy()
 
     def solveDependcy(self):
+        self.logger.debug("solving dependcy..")
         leafIdList = []
         for sorghum in self.sorghumList:
             leafIdList = np.concatenate((leafIdList, sorghum.leafIdList)).astype('int')
