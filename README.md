@@ -53,3 +53,6 @@ Currently there's only one lasso too that you can use it for leaf region minus. 
 
 ### 3. Annotation management
 To remove a leaf or sorghum, select it in **Annotation** and press **DEL**.
+
+### 4. Annotator Screenshot
+![screenshot](screenshot.png)
